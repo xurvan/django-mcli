@@ -2,7 +2,7 @@ import re
 
 from setuptools import find_packages, setup
 
-name = 'drf-mcli'
+name = 'django-mcli'
 owner = 'xurvan'
 
 with open(f'mcli/__init__.py') as f:
@@ -26,7 +26,7 @@ setup(
         'Issue tracker': f'https://github.com/{owner}/{name}/issues',
     },
     packages=find_packages(),
-    install_requires=['django', 'djangorestframework'],
+    install_requires=['django'],
     python_requires='>=3.6',
     zip_safe=False,
     classifiers=[
