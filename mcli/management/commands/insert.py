@@ -10,10 +10,10 @@ from mcli.management.commands._base import _Base
 class Command(_Base):
     help = 'Create an object of a model and save it into database'
 
-    def _insert(self, app: str, model: str, data: dict):
-        model = get_model(app_label=app, model=model)
+    def _insert(self, app: str, model_name: str, data: dict):
+        model = get_model(app_label=app, model=model_name)
         try:
-            self.stdout.write(self.style.MIGRATE_LABEL(f"  Inserting into {model} ({data})... "), ending='')
+            self.stdout.write(self.style.MIGRATE_LABEL(f'  Inserting into "{model_name}" ({data})... '), ending='')
             obj = model.objects.create(**data)
             obj.save()
             self.stdout.write(self.style.SUCCESS('OK'))
