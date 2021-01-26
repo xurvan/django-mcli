@@ -14,7 +14,18 @@ class Command(_Base):
         model = get_model(app_label=app, model=model_name)
         try:
             self.stdout.write(self.style.MIGRATE_LABEL(f'  Inserting into "{model_name}" ({data})... '), ending='')
+
+            relations = {}
+            for key, val in dict(data).items():
+                if isinstance(val, list):
+                    relations[key] = data.pop(key)
+
             obj = model.objects.create(**data)
+            for key, val in relations.items():
+                attr = getattr(obj, key)
+                for i in val:
+                    attr.add(i)
+
             obj.save()
             self.stdout.write(self.style.SUCCESS('OK'))
         except IntegrityError as e:
